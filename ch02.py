@@ -48,3 +48,18 @@ newdata['geometry'] = None
 coordinates = [(24.950899, 60.169158), (24.953492, 60.169158), (24.953510, 60.170104), (24.950958, 60.169990)]
 poly = Polygon(coordinates)
 
+newdata.loc[0, 'geometry'] = poly
+newdata.loc[0, 'Location'] = 'Senaatintori'
+
+from fiona.crs import from_epsg
+newdata.crs = from_epsg(4326)
+
+outfp = r"/Users/taehwanyoon/PycharmProjects/geopy/Data/Senaatintori.shp"
+newdata.to_file(outfp)
+
+grouped = data.groupby('BINOMIAL')
+
+for key, values in grouped:
+    individual_fish = values
+
+
