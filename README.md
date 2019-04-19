@@ -1,5 +1,5 @@
 # geopy, python GIS practice
-https://automating-gis-processes.github.io/CSC18/
+source course from Finland -->  https://automating-gis-processes.github.io/CSC18/
 
 `geopandas, shapely`
 
