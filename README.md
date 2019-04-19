@@ -1,4 +1,5 @@
 # geopy
 `geopandas, shapely`
 
-## Introduction to python GIS practice
+Reference: *Introduction to python GIS practice*
+Goal: use it for geodata+userinfo data mining
