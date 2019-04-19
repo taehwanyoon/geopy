@@ -1,4 +1,4 @@
 # geopy
-gis 
+`geopandas, shapely`
 
 ## Introduction to python GIS practice
