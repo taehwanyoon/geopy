@@ -3,6 +3,6 @@ source course from Finland -->  https://automating-gis-processes.github.io/CSC18
 
 `geopandas, shapely`
 
-Reference: *Introduction to python GIS practice* 
+ref: *Introduction to python GIS* 
 
 Goal: use it for geodata+userinfo data mining
