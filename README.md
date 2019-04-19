@@ -1,4 +1,4 @@
-# geopy
+# geopy, python GIS practice
 `geopandas, shapely`
 
 Reference: *Introduction to python GIS practice* 
