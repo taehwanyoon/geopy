@@ -13,7 +13,7 @@ address = "서울 특별시 " + market["지번주소"].sample(50)
 address = list(address)
 address[:3]
 
-location = gpd.tools.geocode(address, provider='googlev3', api_key="AIzaSyBB2Y3YKZmVd64eVoCE8Mc9TNHwwd6dDd0")
+location = gpd.tools.geocode(address, provider='googlev3', api_key="")
 location.tail()
 
 
