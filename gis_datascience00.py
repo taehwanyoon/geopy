@@ -45,4 +45,32 @@ ax.set_title("세계 도시 분포")
 plt.show()
 
 korea_border = countries[countries.name == 'Korea'].geometry
-korea_border.boundary.squeeze()
+print(korea_border.boundary.squeeze())
+
+
+# print(type(countries.geometry[0]))
+# print(type(korea_border.boundary.iloc[0]))
+# print(type(cities.geometry[0]))
+
+
+from shapely.geometry import Point, Polygon, LineString
+northern_asia = countries.loc[[30, 82, 87]]
+
+korea = countries.loc[countries['name'] == 'Korea', 'geometry'].squeeze()
+china = countries.loc[countries['name'] == 'China', 'geometry'].squeeze()
+
+seoul = Point(126.99778, 37.56829)
+beijing = Point(116.363625, 39.913818)
+tokyo = Point(139.839478, 35.652832)
+hongkong = Point(114.149139, 22.286394)
+
+line = LineString([hongkong, beijing, seoul, tokyo])
+
+base = northern_asia.plot(figsize=(15, 15), color="w", edgecolor="m")
+ax = gpd.GeoSeries([seoul, hongkong, beijing, tokyo, line]).plot(ax=base, color="k", edgecolor="k", lw=1)
+
+countries[countries.crosses(line)]
+
+countries[countries.geometry.dis]
+
+# https://datascienceschool.net/view-notebook/ef921dc25e01437b9b5c532ba3b89b02/
