@@ -62,4 +62,108 @@ grouped = data.groupby('BINOMIAL')
 for key, values in grouped:
     individual_fish = values
 
+import os
+outFolder = r"/Users/taehwanyoon/PycharmProjects/geopy/Data"
+resultFolder = os.path.join(outFolder, 'Results')
+if not os.path.exists(resultFolder):
+    os.makedirs(resultFolder)
+
+for key, values in grouped:
+    outName = "%s.shp" % key.replace(" ", "_")
+    print("Processing: %s" % key)
+    outpath = os.path.join(resultFolder, outName)
+    values.to_file(outpath)
+
+# map projection
+import geopandas as gpd
+fp ="/Users/taehwanyoon/PycharmProjects/geopy/Europe_borders/Europe_borders.shp"
+data = gpd.read_file(fp)
+
+data.crs
+
+data['geometry'].head()
+
+data_proj = data.copy()
+data_proj = data_proj.to_crs(epsg=3035)
+
+data_proj['geometry'].head()
+
+import matplotlib.pyplot as plt
+data.plot(facecolor='gray');
+plt.title("WGS894 projection");
+plt.tight_layout()
+data_proj.plot(facecolor='blue');
+plt.title("ETRS Lambert Azimuthal Equal Area projection");
+plt.tight_layout()
+
+
+# Korea
+fp = "/Users/taehwanyoon/PycharmProjects/geopy/korea/korea.shp"
+data_korea = gpd.read_file(fp)
+data_korea_proj = data_korea.copy()
+# data_korea_proj = data_korea_proj.to_crs(epsg=4326)
+data_korea.plot(facecolor='gray');
+plt.title("WGS894 projection");
+plt.tight_layout()
+# data_korea_proj.plot(facecolor='blue');
+# plt.title("ETRS Lambert Azimuthal Equal Area projection");
+# plt.tight_layout()
+
+# 한국 행정구역
+fp = "/Users/taehwanyoon/PycharmProjects/geopy/CTPRVN_201902/TL_SCCO_CTPRVN.shp"
+data_korea = gpd.read_file(fp)
+data_korea_proj = data_korea.copy()
+data_korea.plot(facecolor='gray');
+plt.title("WGS894 projection: South Korea");
+plt.tight_layout()
+
+from fiona.crs import from_epsg
+data_proj.crs = from_epsg(3035)
+data_proj.crs
+# data_korea_proj.crs = from_epsg(3035)
+outfp = r"/Users/taehwanyoon/PycharmProjects/geopy/Europe_borders/Europe_borders_epsg3035.shp"
+data_proj.to_file(outfp)
+
+
+# import pycrs
+# crs_info = pycrs.parser.from_epsg_code(3035)
+
+# Exercise 2 --------------------------------------------------------------------------------------------------------
+geo = gpd.GeoDataFrame(data, geometry='geometry', crs=from_epsg(4326))
+
+# Geocoding
+# geopy
+
+import pandas as pd
+import geopandas as gpd
+from shapely.geometry import Point
+
+fp = r"/Users/taehwanyoon/PycharmProjects/geopy/addresses.txt"
+data = pd.read_csv(fp, sep=';')
+
+from geopandas.tools import geocode
+
+geo = geocode(data['addr'], provider='nominatim')
+
+join = geo.join(data)
+
+outfp = r"/Users/taehwanyoon/PycharmProjects/geopy/addresses.shp"
+join.to_file(outfp)
+
+join.plot()
+plt.tight_layout()
+
+
+
+import osmnx as ox
+import matplotlib.pyplot as plt
+place_name = "Dogok, Seoul, Korea"
+place_name = "Kamppi, Helsinki, Finland"
+graph = ox.graph_from_place(place_name)
+type(graph)
+
+fig, ax = ox.plot_graph(graph)
+plt.tight_layout()
+
+
 
